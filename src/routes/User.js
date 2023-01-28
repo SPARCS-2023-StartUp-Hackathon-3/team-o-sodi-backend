@@ -92,7 +92,7 @@ class RegDB {
     }
   };
 
-  AddCloset = async ({ userName, storeId, brand, price, product, images }) => {
+  AddCloset = async ({ userName, storeId, purchase }) => {
     try {
       const user = await UserModel.findOne({ UserName: userName });
       const prevClosetList = user.Closet;
@@ -109,6 +109,7 @@ class RegDB {
                 Product: product,
                 Price: price,
                 Images: images,
+                Purchase: purchase,
               },
             ],
           }
@@ -156,17 +157,11 @@ router.post("/addCloset", async (req, res) => {
   try {
     const userName = req.body.userName;
     const storeId = req.body.storeId;
-    const brand = req.body.brand;
-    const price = req.body.price;
-    const product = req.body.product;
-    const images = req.body.images;
+    const purchase = req.body.purchase;
     const dbRed = await RegDBInst.AddCloset({
       userName: userName,
       storeId: storeId,
-      brand: brand,
-      price: price,
-      product: product,
-      images: images,
+      purchase: purchase,
     });
     res.status(200).end();
   } catch (e) {
