@@ -94,9 +94,9 @@ router.post("/addPurchase", async (req, res) => {
       storeId: storeId,
       date: date,
     });
-    return true;
+    return res.status(200).end();
   } catch (e) {
-    return false;
+    return res.status(200).end();
   }
 });
 
