@@ -12,8 +12,8 @@ const OSchemaDefinition = {
   },
 
   Price: {
-    type: Number,
-    default: 0,
+    type: String,
+    default: null,
   },
 
   UserId: {

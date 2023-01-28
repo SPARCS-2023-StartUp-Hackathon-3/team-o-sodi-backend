@@ -17,13 +17,13 @@ const OSchemaDefinition = {
   },
 
   Price: {
-    type: Number,
-    default: 0,
+    type: String,
+    default: null,
   },
 
   Images: {
-    type: String,
-    default: 0,
+    type: Array,
+    default: [],
   },
 };
 

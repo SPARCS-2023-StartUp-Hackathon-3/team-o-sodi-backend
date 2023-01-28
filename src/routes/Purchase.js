@@ -17,12 +17,13 @@ class PurchaseDB {
     console.log("[Purchase - DB] DB Init Completed");
   }
 
-  AddPurchase = async ({ purchasedId, userName, storeId, date }) => {
+  AddPurchase = async ({ purchasedId, userName, storeId, date, price }) => {
     try {
       const newItem = new PurchaseModel({
         PurchasedId: purchasedId,
         UserName: userName,
         StoreId: storeId,
+	      Price: price,
         Date: date,
       });
       const res = await newItem.save();
@@ -61,9 +62,9 @@ function currentTime() {
   const timeString =
     today.getFullYear() +
     "-" +
-    today.getMonth() +
+    (today.getMonth()+1) +
     "-" +
-    today.getDay() +
+    today.getDate() +
     "-" +
     today.getHours() +
     ":" +
@@ -78,12 +79,14 @@ router.post("/addPurchase", async (req, res) => {
     const purchaseId = generateToken();
     const userName = req.body.userName;
     const storeId = req.body.storeId;
+	 const price = req.body.price;
     const date = currentTime();
 
     const dbRes = PurchaseDBInst.AddPurchase({
       purchaseId: purchaseId,
       userName: userName,
       storeId: storeId,
+	  price: price,
       date: date,
     });
     return true;
@@ -95,9 +98,9 @@ router.post("/addPurchase", async (req, res) => {
 router.get("/myPurchase", async (req, res) => {
   try {
     const myPurchase = PurchaseDBInst.GetPurchase(req.query.userName);
-    return res.status(0).json(myPurchase);
+    return res.status(200).json(myPurchase);
   } catch (e) {
-    return res.status(-1).json([]);
+    return res.status(200).json([]);
   }
 });
 
@@ -106,9 +109,9 @@ router.get("/spcificPurchase", async (req, res) => {
     const specialPurchase = PurchaseDBInst.GetSpecificPurchase(
       req.query.purchaseId
     );
-    return res.status(0).json(specialPurchase);
+    return res.status(200).json(specialPurchase);
   } catch (e) {
-    return res.status(-1).json([]);
+    return res.status(200).json([]);
   }
 });
 

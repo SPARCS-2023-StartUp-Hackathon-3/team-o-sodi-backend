@@ -52,7 +52,6 @@ class StoreDB {
       });
       const res = await newItem.save();
       return true;
-      [];
     } catch (e) {
       console.log(`[Store-DB] Add Store Error: ${e}`);
       return false;
@@ -95,27 +94,27 @@ router.post("/addStore", multi_upload.array("img"), async (req, res) => {
       price: price,
       images: images,
     });
-    res.status(0).end();
+    res.status(200).end();
   } catch (e) {}
 });
 
 router.get("/getStore", async (req, res) => {
   try {
     const data = await StoreDBInst.GetStore();
-    return res.status(0).json(data);
+    return res.status(200).json(data);
   } catch (e) {
     console.log(`[Store DB] Error on getting Store: ${e}`);
-    return res.status(-1).json([]);
+    return res.status(200).json([]);
   }
 });
 
 router.get("/getSpecificStore", async (req, res) => {
   try {
     const data = await StoreDBInst.GetStore(req.query.storeId);
-    return res.status(0).json(data);
+    return res.status(200).json(data);
   } catch (e) {
     console.log(`[Store DB] Error on getting Store: ${e}`);
-    return res.status(-1).json([]);
+    return res.status(200).json([]);
   }
 });
 

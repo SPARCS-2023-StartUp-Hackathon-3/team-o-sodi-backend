@@ -125,12 +125,12 @@ router.get("/searchID", async (req, res) => {
   try {
     const userName = req.query.userName;
     const dbRes = await RegDBInst.CheckRegister({ userName: userName });
-    if (dbRes) return res.status(0).json(true);
+    if (dbRes) return res.status(200).json(true);
     else {
-      return res.status(-1).json(false);
+      return res.status(200).json(false);
     }
   } catch (e) {
-    return res.status(-1).json(false);
+    return res.status(200).json(false);
   }
 });
 
@@ -142,12 +142,12 @@ router.get("/login", async (req, res) => {
       userName: userName,
       password: password,
     });
-    if (dbRes) return res.status(0).json(true);
+    if (dbRes) return res.status(200).json(true);
     else {
-      return res.status(-2).json(false);
+      return res.status(200).json(false);
     }
   } catch (e) {
-    return res.status(-2).json(false);
+    return res.status(200).json(false);
   }
 });
 
@@ -179,10 +179,11 @@ router.post("/addRegister", upload, async (req, res) => {
         description: description,
         profileImg: fileName,
       });
+	    console.log(email);
       return true;
-    } else return res.status(-3).json(false);
+    } else return res.status(200).json(false);
   } catch (e) {
-    return res.status(-2).json(false);
+    return res.status(200).json(false);
   }
 });
 
@@ -191,7 +192,7 @@ router.get("/getCloset", async (req, res) => {
     const data = await RegDBInst.GetCloset({
       userName: req.query.userName,
     });
-    return res.status(0).json(data);
+    return res.status(200).json(data);
   } catch (e) {}
 });
 
@@ -225,7 +226,7 @@ router.post("/addCodi", uploadCodi, async (req, res) => {
     const clothIdList = req.body.clothIdList;
     const codiId = generateToken();
     const images = req.file.filename;
-    res.status(0).end();
+    res.status(200).end();
   } catch (e) {}
 });
 
