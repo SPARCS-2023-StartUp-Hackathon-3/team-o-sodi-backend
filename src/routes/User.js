@@ -159,6 +159,7 @@ const RegDBInst = RegDB.getInst();
 
 router.post("/addCloset", async (req, res) => {
   try {
+    console.log("Trying to Add Closet for " + req.body.userName);
     const userName = req.body.userName;
     const storeId = req.body.storeId;
     const dbRed = AddCloset({ userName: userName, storeId: storeId });
