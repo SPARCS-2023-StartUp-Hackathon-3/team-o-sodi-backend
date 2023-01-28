@@ -11,6 +11,16 @@ const OSchemaDefinition = {
     default: null,
   },
 
+  Brand: {
+    type: String,
+    default: null,
+  },
+
+  Product: {
+    type: String,
+    default: null,
+  },
+
   Price: {
     type: String,
     default: null,
@@ -20,6 +30,7 @@ const OSchemaDefinition = {
     type: String,
     default: null,
   },
+
   Date: {
     //yyyy-mm-dd-hh:mm:ss
     type: String,

@@ -4,6 +4,7 @@ const RegisterModel = require("../models/User");
 const PurchaseModel = require("../models/Purchase");
 const path = require("path");
 const fs = require("fs");
+const StoreModel = require("../models/Store");
 const router = express.Router();
 
 class PurchaseDB {
@@ -19,11 +20,17 @@ class PurchaseDB {
 
   AddPurchase = async ({ purchasedId, userName, storeId, date, price }) => {
     try {
+      const store = await StoreModel.findOne({ StoreId: storeId });
+      const price = store.Price;
+      const product = store.Product;
+      const brand = store.Brand;
       const newItem = new PurchaseModel({
         PurchasedId: purchasedId,
         UserName: userName,
+        Brand: brand,
+        Product: product,
         StoreId: storeId,
-	      Price: price,
+        Price: price,
         Date: date,
       });
       const res = await newItem.save();
@@ -62,7 +69,7 @@ function currentTime() {
   const timeString =
     today.getFullYear() +
     "-" +
-    (today.getMonth()+1) +
+    (today.getMonth() + 1) +
     "-" +
     today.getDate() +
     "-" +
@@ -79,14 +86,12 @@ router.post("/addPurchase", async (req, res) => {
     const purchaseId = generateToken();
     const userName = req.body.userName;
     const storeId = req.body.storeId;
-	 const price = req.body.price;
     const date = currentTime();
 
     const dbRes = PurchaseDBInst.AddPurchase({
       purchaseId: purchaseId,
       userName: userName,
       storeId: storeId,
-	  price: price,
       date: date,
     });
     return true;
