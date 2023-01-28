@@ -103,7 +103,9 @@ class PostDB {
         let wearTagsBreak = [];
         for (const b of wearTags) {
           const c = await StoreModel.findOne({ StoreId: b });
-          wearTagsBreak = [...wearTagsBreak, c];
+          if (c !== null) {
+            wearTagsBreak = [...wearTagsBreak, c];
+          }
         }
         finale = [...finale, { post: a, wearTags: wearTagsBreak }];
       }
