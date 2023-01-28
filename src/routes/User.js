@@ -340,56 +340,61 @@ const sharpUpload = multer({ storage: storage }).single("file");
 //
 
 router.post("/camera", sharpUpload, async (req, res) => {
-  const fileName = req.file.filename;
-  let inputFile = "../../sharpFiles/" + fileName;
-  let outputFile = "../../sharpFiles/trim_" + fileName;
-  const images = fileName;
-  const userName = req.body.userName;
+  try {
+    const fileName = req.file.filename;
+    let inputFile = "../../sharpFiles/" + fileName;
+    let outputFile = "../../sharpFiles/trim_" + fileName;
+    const images = fileName;
+    const userName = req.body.userName;
 
-  // sharp(inputFile)
-  //   .resize({ height: 625, width: 400 })
-  //   .toFile(outputFile)
-  //   .then(function (newFileInfo) {
-  //     console.log("Sucess");
-  //   })
-  //   .catch(function (err) {
-  //     console.log("Error Occurred");
-  //   });
+    // sharp(inputFile)
+    //   .resize({ height: 625, width: 400 })
+    //   .toFile(outputFile)
+    //   .then(function (newFileInfo) {
+    //     console.log("Sucess");
+    //   })
+    //   .catch(function (err) {
+    //     console.log("Error Occurred");
+    //   });
 
-  // const inputPath = outputFile;
-  // const formData = new FormData();
-  // formData.append("size", "auto");
-  // formData.append(
-  //   "image_file",
-  //   fs.createReadStream(inputPath),
-  //   path.basename(inputPath)
-  // );
+    // const inputPath = outputFile;
+    // const formData = new FormData();
+    // formData.append("size", "auto");
+    // formData.append(
+    //   "image_file",
+    //   fs.createReadStream(inputPath),
+    //   path.basename(inputPath)
+    // );
 
-  // axios({
-  //   method: "post",
-  //   url: "https://api.remove.bg/v1.0/removebg",
-  //   data: formData,
-  //   responseType: "arraybuffer",
-  //   headers: {
-  //     ...formData.getHeaders(),
-  //     "X-Api-Key": "EPEvH2sGu63eRhznq9XwUYsC",
-  //   },
-  //   encoding: null,
-  // })
-  //   .then((response) => {
-  //     if (response.status != 200)
-  //       return console.error("Error:", response.status, response.statusText);
-  //     fs.writeFileSync("no-bg_" + inputPath, response.data);
-  //   })
-  //   .catch((error) => {
-  //     return console.error("Request failed:", error);
-  //   });
+    // axios({
+    //   method: "post",
+    //   url: "https://api.remove.bg/v1.0/removebg",
+    //   data: formData,
+    //   responseType: "arraybuffer",
+    //   headers: {
+    //     ...formData.getHeaders(),
+    //     "X-Api-Key": "EPEvH2sGu63eRhznq9XwUYsC",
+    //   },
+    //   encoding: null,
+    // })
+    //   .then((response) => {
+    //     if (response.status != 200)
+    //       return console.error("Error:", response.status, response.statusText);
+    //     fs.writeFileSync("no-bg_" + inputPath, response.data);
+    //   })
+    //   .catch((error) => {
+    //     return console.error("Request failed:", error);
+    //   });
 
-  const dbRes = RegDBInst.PushCloset({
-    userName: userName,
-    purchase: "false",
-    images: images,
-  });
+    const dbRes = RegDBInst.PushCloset({
+      userName: userName,
+      purchase: "false",
+      images: images,
+    });
+    return res.status(200).end();
+  } catch (e) {
+    return res.status(200).end();
+  }
 });
 
 //For Debug
