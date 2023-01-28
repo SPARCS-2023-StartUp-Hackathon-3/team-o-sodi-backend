@@ -40,14 +40,16 @@ class PurchaseDB {
   };
   GetSpecificPurchase = async ({ purchaseId }) => {
     try {
-      const thePurchase = PurchaseModel.findOne({ PurchaseId: purchaseId });
+      const thePurchase = await PurchaseModel.findOne({
+        PurchaseId: purchaseId,
+      });
       return thePurchase;
     } catch (e) {}
   };
 
   GetPurchase = async ({ userName }) => {
     try {
-      const purchaseList = PurchaseModel.find({ UserName: userName });
+      const purchaseList = await PurchaseModel.find({ UserName: userName });
       return purchaseList;
     } catch (e) {}
   };
@@ -104,7 +106,7 @@ router.post("/addPurchase", async (req, res) => {
 
 router.get("/myPurchase", async (req, res) => {
   try {
-    const myPurchase = PurchaseDBInst.GetPurchase(req.query.userName);
+    const myPurchase = await PurchaseDBInst.GetPurchase(req.query.userName);
     return res.status(200).json(myPurchase);
   } catch (e) {
     return res.status(200).json([]);
@@ -113,7 +115,7 @@ router.get("/myPurchase", async (req, res) => {
 
 router.get("/specificPurchase", async (req, res) => {
   try {
-    const specialPurchase = PurchaseDBInst.GetSpecificPurchase(
+    const specialPurchase = await PurchaseDBInst.GetSpecificPurchase(
       req.query.purchaseId
     );
     return res.status(200).json(specialPurchase);
