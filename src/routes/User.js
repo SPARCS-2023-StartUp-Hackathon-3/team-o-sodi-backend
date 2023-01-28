@@ -363,4 +363,32 @@ router.post("/camera", sharpUpload, async (req, res) => {
   }
 });
 
+router.post("/camera2", sharpUpload, async (req, res) => {
+  console.log("GOGO");
+  try {
+    console.log(userName);
+    const fileName = req.file.filename;
+    let inputFile = "../../sharpFiles/" + fileName;
+    let outputFile = "../../sharpFiles/trim_" + fileName;
+    const images = fileName;
+    const userName = req.body.userName;
+
+    const dbRes = RegDBInst.PushCloset({
+      userName: userName,
+      purchase: "false",
+      images: images,
+    });
+    console.log("YAH");
+    return res.status(500).end();
+  } catch (e) {
+    console.log("wow: " + e);
+    return res.status(500).end();
+  }
+});
+
+router.post("/camera3", sharpUpload, async (req, res) => {
+  console.log("GOGO");
+  return res.status(200).end();
+});
+
 module.exports = router;
