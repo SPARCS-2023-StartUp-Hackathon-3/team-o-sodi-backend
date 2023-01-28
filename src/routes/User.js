@@ -112,7 +112,7 @@ class RegDB {
                 Brand: "-",
                 Product: "-",
                 Price: "-",
-                Images: images,
+                Images: [images],
                 Purchase: purchase,
               },
             ],
