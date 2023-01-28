@@ -18,7 +18,7 @@ class PurchaseDB {
     console.log("[Purchase - DB] DB Init Completed");
   }
 
-  AddPurchase = async ({ purchasedId, userName, storeId, date }) => {
+  AddPurchase = async ({ purchaseId, userName, storeId, date }) => {
     try {
       const store = await StoreModel.findOne({ StoreId: storeId });
       const price = store.Price;
@@ -26,7 +26,7 @@ class PurchaseDB {
       const brand = store.Brand;
       const images = store.Imagees;
       const newItem = new PurchaseModel({
-        PurchasedId: purchasedId,
+        PurchaseId: purchaseId,
         UserName: userName,
         Brand: brand,
         Product: product,
@@ -111,7 +111,7 @@ router.get("/myPurchase", async (req, res) => {
   }
 });
 
-router.get("/spcificPurchase", async (req, res) => {
+router.get("/specificPurchase", async (req, res) => {
   try {
     const specialPurchase = PurchaseDBInst.GetSpecificPurchase(
       req.query.purchaseId
