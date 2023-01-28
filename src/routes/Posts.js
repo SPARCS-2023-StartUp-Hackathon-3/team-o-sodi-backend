@@ -24,23 +24,25 @@ class PostDB {
         let stores = [];
         for (const b in a.WearTag) {
           const clothInfo = await StoreModel.findOne({ StoreId: b }).catch(
-		  function (error) {
-			  console.log("WHY ARE");
-		  }
-	  );
+            function (error) {
+              console.log("WHY ARE");
+            }
+          );
           stores = [...stores, clothInfo];
         }
         ultimatePost = [...ultimatePost, stores]; //각각의 element는 { [ { StoreId, Brand, Product, ... },  ], [], [], ... }
       }
       return ultimatePost;
-    } catch (e) {return null;}
+    } catch (e) {
+      return null;
+    }
   };
-  
+
   GetRealPosts = async () => {
-  	try {
-	const res = PostModel.find();
-	return res;
-	} catch (e) {}
+    try {
+      const res = PostModel.find();
+      return res;
+    } catch (e) {}
   };
 
   AddPost = async ({
@@ -62,9 +64,9 @@ class PostDB {
         Images: images,
         Date: date,
       });
-	    console.log(newItem);
+      console.log(newItem);
       const res = await newItem.save();
-	    console.log(res);
+      console.log(res);
     } catch (e) {
       console.log(`[POST - DB] Post Insert Error: ${e}`);
     }
@@ -90,24 +92,31 @@ class PostDB {
     } catch (e) {}
   };
 
-GetPostDump = async() => {
-	try{
-	const postdump = await PostModel.find();
-	let finale = [];
-		console.log(postdump);
-	for ( const a of postdump){
-		console.log(a);
-		const wearTags = a.WearTag;
-		let wearTagsBreak = [];
-		for( const b of wearTags ){
-			const c = await StoreModel.findOne({StoreId: b});
-			wearTagsBreak = [ ...wearTagsBreak, c ];
-		}
-		finale = [ ...finale, { post: a, wearTags: wearTagsBreak } ];
-	}
-		return finale;
-	} catch (e) {}
-}
+  GetPostDump = async () => {
+    try {
+      const postdump = await PostModel.find();
+      let finale = [];
+      console.log(postdump);
+      for (const a of postdump) {
+        console.log(a);
+        const wearTags = a.WearTag;
+        let wearTagsBreak = [];
+        for (const b of wearTags) {
+          const c = await StoreModel.findOne({ StoreId: b });
+          wearTagsBreak = [...wearTagsBreak, c];
+        }
+        finale = [...finale, { post: a, wearTags: wearTagsBreak }];
+      }
+      return finale;
+    } catch (e) {}
+  };
+
+  DeletePost = async ({ postId }) => {
+    try {
+      const dbres = await PostModel.deleteOne({ PostId: postId });
+      return true;
+    } catch (e) {}
+  };
 
   Test = () => {
     return "Returned from Inst";
@@ -145,7 +154,7 @@ function currentTime() {
   const timeString =
     today.getFullYear() +
     "-" +
-    (today.getMonth()+1) +
+    (today.getMonth() + 1) +
     "-" +
     today.getDate() +
     "-" +
@@ -157,6 +166,16 @@ function currentTime() {
   return timeString;
 }
 
+router.post("/deletePost", async (req, res) => {
+  try {
+    const postId = req.body.postId;
+    const dbRes = DeletePost({ postId: postId });
+    res.status.end();
+  } catch (e) {
+    res.status.end();
+  }
+});
+
 router.post("/postPost", multi_upload.array("img"), async (req, res) => {
   try {
     const token = generateToken();
@@ -164,7 +183,7 @@ router.post("/postPost", multi_upload.array("img"), async (req, res) => {
     const title = req.body.title;
     const description = req.body.description;
     const wearTag = req.body.wearTag;
-	  console.log(req.files);
+    console.log(req.files);
     const image = req.files.map((a) => a.filename);
     const date = currentTime();
     const dbRes = await PostDBInst.AddPost({
@@ -186,33 +205,54 @@ router.post("/postPost", multi_upload.array("img"), async (req, res) => {
 });
 
 router.get("/getPostDump", async (req, res) => {
-	  try {
-		      const data = await PostDBInst.GetPostDump().catch(e => { console.log(e) });
-		      return res.status(200).json(data); // ??
-		  } catch (e) {
-		  console.log(e);
-		   return res.status(200).json([]).catch(e => {console.log(e)}); // ??
-		   }
-		  });
+  try {
+    const data = await PostDBInst.GetPostDump().catch((e) => {
+      console.log(e);
+    });
+    return res.status(200).json(data); // ??
+  } catch (e) {
+    console.log(e);
+    return res
+      .status(200)
+      .json([])
+      .catch((e) => {
+        console.log(e);
+      }); // ??
+  }
+});
 
 router.get("/getPost", async (req, res) => {
   try {
-    const data = await PostDBInst.GetRealPosts().catch(e => { console.log(e) });
+    const data = await PostDBInst.GetRealPosts().catch((e) => {
+      console.log(e);
+    });
     return res.status(200).json(data); // ??
   } catch (e) {
-	  console.log(e);
-    return res.status(200).json([]).catch(e => {console.log(e)}); // ??
+    console.log(e);
+    return res
+      .status(200)
+      .json([])
+      .catch((e) => {
+        console.log(e);
+      }); // ??
   }
 });
 
 router.get("/getPostWear", async (req, res) => {
-	  try {
-		      const data = await PostDBInst.GetPosts().catch(e => { console.log(e) });
-		      return res.status(200).json(data); // ??
-		     } catch (e) {
-		               console.log(e);
-	return res.status(200).json([]).catch(e => {console.log(e)}); // ??
-                     }	  
+  try {
+    const data = await PostDBInst.GetPosts().catch((e) => {
+      console.log(e);
+    });
+    return res.status(200).json(data); // ??
+  } catch (e) {
+    console.log(e);
+    return res
+      .status(200)
+      .json([])
+      .catch((e) => {
+        console.log(e);
+      }); // ??
+  }
 });
 
 router.post("/pushLikePost", async (req, res) => {
