@@ -96,11 +96,13 @@ class RegDB {
     try {
       const user = await UserModel.findOne({ UserName: userName });
       const store = await StoreModel.findOne({ StoreId: storeId });
+      console.log(store);
       const brand = store.Brand;
       const product = store.Product;
       const price = store.Price;
       const images = store.images;
       const prevClosetList = user.Closet;
+      console.log(prebClosetList);
       console.log("Added Closet for " + user.UserName);
       if (store !== null) {
         const dbRes = await UserModel.updateOne(
@@ -159,9 +161,6 @@ const RegDBInst = RegDB.getInst();
 
 router.post("/addCloset", async (req, res) => {
   try {
-    console.log("Trying to Add Closet for ");
-    console.log(req.body);
-    console.log(req);
     const userName = req.body.userName;
     const storeId = req.body.storeId;
     const dbRed = await RegDBInst.AddCloset({
