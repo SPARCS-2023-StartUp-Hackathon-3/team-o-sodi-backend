@@ -92,19 +92,11 @@ class RegDB {
     }
   };
 
-  AddCloset = async ({ userName, storeId }) => {
+  AddCloset = async ({ userName, storeId, brand, price, product, images }) => {
     try {
       const user = await UserModel.findOne({ UserName: userName });
-      const store = await StoreModel.findOne({ StoreId: storeId });
-      console.log(store);
-      const brand = store.Brand;
-      const product = store.Product;
-      const price = store.Price;
-      const images = store.Images;
-      console.log(images);
       const prevClosetList = user.Closet;
-      console.log(prevClosetList);
-      console.log("Added Closet for " + user.UserName);
+      console.log("Added Closet for " + userName);
       if (store !== null || images !== null) {
         const dbRes = await UserModel.updateOne(
           { UserName: userName },
@@ -160,13 +152,21 @@ class RegDB {
 
 const RegDBInst = RegDB.getInst();
 
-router.post("/addClosets", async (req, res) => {
+router.post("/addCloset", async (req, res) => {
   try {
     const userName = req.body.userName;
     const storeId = req.body.storeId;
+    const brand = req.body.brand;
+    const price = req.body.price;
+    const product = req.body.product;
+    const images = req.body.images;
     const dbRed = await RegDBInst.AddCloset({
       userName: userName,
       storeId: storeId,
+      brand: brand,
+      price: price,
+      product: product,
+      images: images,
     });
     res.status(200).end();
   } catch (e) {
