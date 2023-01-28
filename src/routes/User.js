@@ -336,7 +336,7 @@ const sharpStorage = multer.diskStorage({
   },
 });
 
-const sharpUpload = multer({ storage: storage }).single("file");
+const sharpUpload = multer({ storage: sharpStorage }).single("file");
 //
 
 router.post("/camera", sharpUpload, async (req, res) => {
@@ -356,7 +356,7 @@ router.post("/camera", sharpUpload, async (req, res) => {
     //   .catch(function (err) {
     //     console.log("Error Occurred");
     //   });
-
+    ///////////
     // const inputPath = outputFile;
     // const formData = new FormData();
     // formData.append("size", "auto");
@@ -396,31 +396,5 @@ router.post("/camera", sharpUpload, async (req, res) => {
     return res.status(200).end();
   }
 });
-
-//For Debug
-// const a = RegDBInst.AddRegister({
-//   email: "hajun@chang",
-//   userName: "Hajun",
-//   description: "Tired",
-//   password: "killme",
-//   profileImg: "doge",
-// });
-// const b = RegDBInst.AddRegister({
-//   email: "Mar@io",
-//   userName: "Mario",
-//   description: "Flower",
-//   password: "Yahoo",
-//   profileImg: "DDD",
-// });
-//
-
-// const a = RegDBInst.AddCloset({
-//   userName: "Hajun",
-//   storeId: "store1",
-//   brand: "Nike",
-//   product: "Shoe",
-//   price: 100,
-//   images: "shoeImg",
-// });
 
 module.exports = router;
