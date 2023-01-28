@@ -113,7 +113,10 @@ class PostDB {
 
   DeletePost = async ({ postId }) => {
     try {
-      const dbres = await PostModel.deleteOne({ PostId: postId });
+      const dbres = await PostModel.updateOne(
+        { PostId: postId },
+        { WearTag: [] }
+      );
       return true;
     } catch (e) {}
   };
@@ -169,7 +172,7 @@ function currentTime() {
 router.post("/deletePost", async (req, res) => {
   try {
     const postId = req.body.postId;
-    const dbRes = DeletePost({ PostId: postId });
+    const dbRes = DeletePost({ postId: postId });
     res.status(200).end();
   } catch (e) {
     res.status(200).end();
