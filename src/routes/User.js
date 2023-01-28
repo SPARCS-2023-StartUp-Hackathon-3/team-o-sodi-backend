@@ -7,10 +7,10 @@ const { getEnabledCategories } = require("trace_events");
 const { generateKey } = require("crypto");
 const router = express.Router();
 //const sharp = require("sharp");
-const axios = require("axios");
-const FormData = require("form-data");
-const fs = require("fs");
-const path = require("path");
+//const axios = require("axios");
+//const FormData = require("form-data");
+//const fs = require("fs");
+//const path = require("path");
 
 class RegDB {
   static _inst_;
