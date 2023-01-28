@@ -160,7 +160,7 @@ class RegDB {
 
 const RegDBInst = RegDB.getInst();
 
-router.post("/addCloset", async (req, res) => {
+router.post("/addClosets", async (req, res) => {
   try {
     const userName = req.body.userName;
     const storeId = req.body.storeId;
