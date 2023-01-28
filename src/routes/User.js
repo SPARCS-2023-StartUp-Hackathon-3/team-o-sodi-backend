@@ -101,6 +101,7 @@ class RegDB {
       const product = store.Product;
       const price = store.Price;
       const images = store.images;
+      console.log(images);
       const prevClosetList = user.Closet;
       console.log(prevClosetList);
       console.log("Added Closet for " + user.UserName);
