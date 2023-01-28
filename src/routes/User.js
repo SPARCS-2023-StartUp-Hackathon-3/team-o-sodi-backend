@@ -117,6 +117,13 @@ class RegDB {
       return true;
     } catch (e) {}
   };
+
+  GetProfile = async ({ userName }) => {
+    try {
+      const user = await UserModel.findOne({ UserName: userName });
+      return user;
+    } catch (e) {}
+  };
 }
 
 const RegDBInst = RegDB.getInst();
@@ -151,6 +158,14 @@ router.get("/login", async (req, res) => {
   }
 });
 
+router.get("/getProfile", async (req, res) => {
+  try {
+    const userName = req.query.userName;
+    const profile = await RegDBInst.GetProfile({ userName: userName });
+    return res.status(200).json(profile);
+  } catch (e) {}
+});
+
 //File Upload
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -179,7 +194,7 @@ router.post("/addRegister", upload, async (req, res) => {
         description: description,
         profileImg: fileName,
       });
-	    console.log(email);
+      console.log(email);
       return true;
     } else return res.status(200).json(false);
   } catch (e) {
