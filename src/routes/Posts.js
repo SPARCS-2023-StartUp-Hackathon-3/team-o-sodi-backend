@@ -169,7 +169,7 @@ function currentTime() {
 router.post("/deletePost", async (req, res) => {
   try {
     const postId = req.body.postId;
-    const dbRes = DeletePost({ postId: postId });
+    const dbRes = DeletePost({ PostId: postId });
     res.status(200).end();
   } catch (e) {
     res.status(200).end();
