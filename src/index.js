@@ -35,7 +35,7 @@ app.use("/loginRouter", userRouter);
 app.use("/purchase", purchaseRouter);
 
 const OMongooseOption = { useNewUrlParser: true, useUnifiedTopology: true };
-mongoose.connect("mongodb://localhost:27017/SODI", OMongooseOption).then(
+mongoose.connect("mongodb://sparcs:SrCy4zAEDPvZgWMEPg4gAHzG@team-o.cyabzp8jcj3s.ap-northeast-2.docdb.amazonaws.com:27017/?tls=true&tlsAllowInvalidCertificates=true&retryWrites=false", OMongooseOption).then(
   () => {
     console.log("[Mongoose] Connection Complete!");
   },
