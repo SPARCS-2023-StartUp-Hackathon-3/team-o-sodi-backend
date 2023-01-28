@@ -107,7 +107,9 @@ router.post("/addPurchase", async (req, res) => {
 
 router.get("/myPurchase", async (req, res) => {
   try {
-    const myPurchase = await PurchaseDBInst.GetPurchase(req.query.userName);
+    const myPurchase = await PurchaseDBInst.GetPurchase({
+      userName: req.query.userName,
+    });
     return res.status(200).json(myPurchase);
   } catch (e) {
     return res.status(200).json([]);
@@ -116,9 +118,9 @@ router.get("/myPurchase", async (req, res) => {
 
 router.get("/specificPurchase", async (req, res) => {
   try {
-    const specialPurchase = await PurchaseDBInst.GetSpecificPurchase(
-      req.query.purchaseId
-    );
+    const specialPurchase = await PurchaseDBInst.GetSpecificPurchase({
+      purchaseId: req.query.purchaseId,
+    });
     return res.status(200).json(specialPurchase);
   } catch (e) {
     return res.status(200).json([]);
