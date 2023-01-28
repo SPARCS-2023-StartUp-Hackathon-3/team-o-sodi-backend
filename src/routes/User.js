@@ -68,6 +68,20 @@ class RegDB {
     }
   };
 
+  GetCodiDump = async ({ userName }) => {
+    try {
+      const user = await UserModel.findOne({ userName: userName });
+      const codiIdList = user.Codi;
+      let finale = [];
+
+      for (a of codiIdList) {
+        const oneCodi = await CodiModel.findOne({ CodiId: a });
+        finale = [...finale, oneCodi];
+      }
+      return finale;
+    } catch (e) {}
+  };
+
   GetCloset = async ({ userName }) => {
     try {
       const user = await UserModel.findOne({ userName: userName });
@@ -78,9 +92,14 @@ class RegDB {
     }
   };
 
-  AddCloset = async ({ userName, storeId, brand, product, price, images }) => {
+  AddCloset = async ({ userName, storeId }) => {
     try {
       const user = await UserModel.findOne({ UserName: userName });
+      const store = await StoreModel.findOne({ StoreId: storeId });
+      const brand = store.Brand;
+      const product = store.Product;
+      const price = store.Price;
+      const images = store.images;
       const prevClosetList = user.Closet;
       const dbRes = await UserModel.updateOne(
         { UserName: userName },
@@ -108,9 +127,16 @@ class RegDB {
         { userName: userName },
         { Codi: newCodi }
       );
+      let prevStoreList = [];
+
+      for (a of clothIdList) {
+        const cloth = await StoreModel.findOne({ StoreId: a });
+        prevStoreList = [...prevStoreList, cloth];
+      }
+
       const newItem = new CodiModel({
         CodiId: codiId,
-        Clothes: clothIdList,
+        Clothes: prevStoreList,
         Images: images,
       });
       const res = await newItem.save();
@@ -127,6 +153,17 @@ class RegDB {
 }
 
 const RegDBInst = RegDB.getInst();
+
+route.post("/addCloset", async (req, res) => {
+  try {
+    const userName = req.body.userName;
+    const storeId = req.body.userName;
+    const dbRed = AddCloset({ userName: userName, storeId: storeId });
+    res.status(200).end();
+  } catch (e) {
+    res.status(200).end();
+  }
+});
 
 router.get("/searchID", async (req, res) => {
   try {
@@ -241,6 +278,12 @@ router.post("/addCodi", uploadCodi, async (req, res) => {
     const clothIdList = req.body.clothIdList;
     const codiId = generateToken();
     const images = req.file.filename;
+    const dbRed = AddCodi({
+      userName: userName,
+      clothIdList: clothIdList,
+      codiId: codiId,
+      images: images,
+    });
     res.status(200).end();
   } catch (e) {}
 });
