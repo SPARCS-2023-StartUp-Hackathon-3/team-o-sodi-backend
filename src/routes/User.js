@@ -161,6 +161,7 @@ router.post("/addCloset", async (req, res) => {
   try {
     console.log("Trying to Add Closet for ");
     console.log(req.body);
+    console.log(req);
     const userName = req.body.userName;
     const storeId = req.body.storeId;
     const dbRed = await RegDBInst.AddCloset({
