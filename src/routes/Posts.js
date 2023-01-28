@@ -115,7 +115,7 @@ class PostDB {
     try {
       const dbres = await PostModel.updateOne(
         { PostId: postId },
-        { WearTag: [] }
+        { WearTag: ["Replaced"] }
       );
       return true;
     } catch (e) {}
