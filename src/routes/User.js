@@ -95,6 +95,11 @@ class RegDB {
   AddCloset = async ({ userName, storeId, purchase }) => {
     try {
       const user = await UserModel.findOne({ UserName: userName });
+      const store = await StoreModel.findOne({ StoreId: storeId });
+      const brand = store.Brand;
+      const product = store.Product;
+      const price = store.Price;
+      const images = store.Images;
       const prevClosetList = user.Closet;
       console.log("Added Closet for " + userName);
       if (storeId !== null) {
