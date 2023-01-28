@@ -49,6 +49,7 @@ class PurchaseDB {
 
   GetPurchase = async ({ userName }) => {
     try {
+      console.log(userName);
       const purchaseList = await PurchaseModel.find({ UserName: userName });
       return purchaseList;
     } catch (e) {}
