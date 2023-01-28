@@ -337,7 +337,7 @@ const sharpStorage = multer.diskStorage({
   },
 });
 
-const sharpUpload = multer({ storage: sharpStorage }).single("file");
+const sharpUpload = multer({ storage: storage }).single("file");
 //
 
 router.post("/camera", sharpUpload, async (req, res) => {
