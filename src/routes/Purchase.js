@@ -18,12 +18,13 @@ class PurchaseDB {
     console.log("[Purchase - DB] DB Init Completed");
   }
 
-  AddPurchase = async ({ purchasedId, userName, storeId, date, price }) => {
+  AddPurchase = async ({ purchasedId, userName, storeId, date }) => {
     try {
       const store = await StoreModel.findOne({ StoreId: storeId });
       const price = store.Price;
       const product = store.Product;
       const brand = store.Brand;
+      const images = store.Imagees;
       const newItem = new PurchaseModel({
         PurchasedId: purchasedId,
         UserName: userName,
@@ -31,6 +32,7 @@ class PurchaseDB {
         Product: product,
         StoreId: storeId,
         Price: price,
+        Images: images,
         Date: date,
       });
       const res = await newItem.save();
@@ -45,7 +47,7 @@ class PurchaseDB {
 
   GetPurchase = async ({ userName }) => {
     try {
-      const purchaseList = PurchaseModel.find({ UserName: username });
+      const purchaseList = PurchaseModel.find({ UserName: userName });
       return purchaseList;
     } catch (e) {}
   };

@@ -31,6 +31,11 @@ const OSchemaDefinition = {
     default: null,
   },
 
+  Images: {
+    type: Array,
+    default: [],
+  },
+
   Date: {
     //yyyy-mm-dd-hh:mm:ss
     type: String,
