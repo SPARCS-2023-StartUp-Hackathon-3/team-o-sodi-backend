@@ -163,7 +163,10 @@ router.post("/addCloset", async (req, res) => {
     console.log(req.body);
     const userName = req.body.userName;
     const storeId = req.body.storeId;
-    const dbRed = AddCloset({ userName: userName, storeId: storeId });
+    const dbRed = await RegDBInst.AddCloset({
+      userName: userName,
+      storeId: storeId,
+    });
     res.status(200).end();
   } catch (e) {
     res.status(200).end();
