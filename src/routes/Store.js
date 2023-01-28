@@ -36,7 +36,7 @@ class StoreDB {
 
   GetSpecificStore = async ({ storeId }) => {
     try {
-      const specificStore = StoreDBInst.findOne({ StoreID: storeId });
+      const specificStore = await toreDBInst.findOne({ StoreID: storeId });
       return specificStore;
     } catch (e) {}
   };
