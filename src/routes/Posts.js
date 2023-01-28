@@ -170,9 +170,9 @@ router.post("/deletePost", async (req, res) => {
   try {
     const postId = req.body.postId;
     const dbRes = DeletePost({ postId: postId });
-    res.status.end();
+    res.status(200).end();
   } catch (e) {
-    res.status.end();
+    res.status(200).end();
   }
 });
 
