@@ -93,7 +93,7 @@ router.post("/addPurchase", async (req, res) => {
     const storeId = req.body.storeId;
     const date = currentTime();
 
-    const dbRes = PurchaseDBInst.AddPurchase({
+    const dbRes = await PurchaseDBInst.AddPurchase({
       purchaseId: purchaseId,
       userName: userName,
       storeId: storeId,
