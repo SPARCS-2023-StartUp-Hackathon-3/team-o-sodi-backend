@@ -82,6 +82,7 @@ const multi_upload = multer({ storage: storage });
 
 router.post("/addStore", multi_upload.array("img"), async (req, res) => {
   try {
+    console.log(req.body);
     const storeId = generateToken();
     const brand = req.body.brand;
     const product = req.body.product;
