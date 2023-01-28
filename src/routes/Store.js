@@ -111,7 +111,7 @@ router.get("/getStore", async (req, res) => {
 
 router.get("/getSpecificStore", async (req, res) => {
   try {
-    const data = await StoreDBInst.GetStore(req.query.storeId);
+    const data = await StoreDBInst.GetSpecificStore(req.query.storeId);
     return res.status(200).json(data);
   } catch (e) {
     console.log(`[Store DB] Error on getting Store: ${e}`);
