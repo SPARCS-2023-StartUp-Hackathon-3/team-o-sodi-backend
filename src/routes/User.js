@@ -102,7 +102,7 @@ class RegDB {
       const price = store.Price;
       const images = store.images;
       const prevClosetList = user.Closet;
-      console.log(prebClosetList);
+      console.log(prevClosetList);
       console.log("Added Closet for " + user.UserName);
       if (store !== null) {
         const dbRes = await UserModel.updateOne(
