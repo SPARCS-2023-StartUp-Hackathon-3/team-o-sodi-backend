@@ -101,21 +101,24 @@ class RegDB {
       const price = store.Price;
       const images = store.images;
       const prevClosetList = user.Closet;
-      const dbRes = await UserModel.updateOne(
-        { UserName: userName },
-        {
-          Closet: [
-            ...prevClosetList,
-            {
-              StoreId: storeId,
-              Brand: brand,
-              Product: product,
-              Price: price,
-              Images: images,
-            },
-          ],
-        }
-      );
+      console.log("Added Closet for " + user.UserName);
+      if (store !== null) {
+        const dbRes = await UserModel.updateOne(
+          { UserName: userName },
+          {
+            Closet: [
+              ...prevClosetList,
+              {
+                StoreId: storeId,
+                Brand: brand,
+                Product: product,
+                Price: price,
+                Images: images,
+              },
+            ],
+          }
+        );
+      }
     } catch (e) {}
   };
 
