@@ -100,7 +100,7 @@ class RegDB {
       const brand = store.Brand;
       const product = store.Product;
       const price = store.Price;
-      const images = store.images;
+      const images = store.Images;
       console.log(images);
       const prevClosetList = user.Closet;
       console.log(prevClosetList);
