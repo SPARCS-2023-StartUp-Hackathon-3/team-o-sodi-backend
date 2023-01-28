@@ -35,9 +35,16 @@ const OSchemaDefinition = {
     type: Array,
     default: [],
   },
+
   Images: {
     type: Array,
     default: [],
+  },
+
+  Date: {
+    //"yyyy-mm-dd-hh:mm:ss"
+    type: String,
+    default: null,
   },
 };
 const OSchemaOptions = { timestamp: true };

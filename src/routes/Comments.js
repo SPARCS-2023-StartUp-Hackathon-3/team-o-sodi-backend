@@ -16,8 +16,6 @@ function generateToken() {
   }
   return token;
 }
-console.log("haa");
-console.log(generateToken());
 
 class CommentDB {
   static _inst_;
@@ -32,32 +30,36 @@ class CommentDB {
 
   GetComments = async ({ postId }) => {
     try {
-      const dbRes = await CommentDB.find({ PostId: postId });
-      return { data: dbRes };
+      const dbRes = await PostModel.find({ PostId: postId });
+      const comments = dbRes.Comments;
+      return comments;
     } catch (e) {}
   };
 
-  AddComments = async ({ commentId, description, userId }) => {
+  AddComments = async ({ postId, commentId, description, userName }) => {
     try {
       const newItem = new CommentModel({
         CommentId: commentId,
         Description: description,
-        UserId: userId,
+        UserName: userName,
       });
-    } catch (e) {}
-  };
-
-  PushLikeComment = async ({ commnetId, userId }) => {
-    try {
-      const findComment = await CommentModel.findOne({ CommentId: commnetId });
-      const likeList = [...findComment.Likes, userId];
-      const res = await CommentModel.updateOne(
-        { CommentId: commentId },
-        { Likes: likeList }
+      const res = await newItem.save();
+      const thePost = await PostModel.findOne({ PostId: postId });
+      const prevComments = thePost.Comments;
+      const resDB = await PostModel.updateOne(
+        { PostId: postId },
+        {
+          Comments: [
+            ...prevComments,
+            {
+              CommentId: commentId,
+              Description: description,
+              UserName: userName,
+            },
+          ],
+        }
       );
-    } catch (e) {
-      console.log(`[Comment - DB] Error in Push Like Comment: ${e}`);
-    }
+    } catch (e) {}
   };
 }
 
@@ -65,9 +67,10 @@ const CommentDBInst = CommentDB.getInst();
 
 router.get("/getComments", async (req, res) => {
   try {
-    const { data } = await CommentDBInst.GetComments({
+    const data = await CommentDBInst.GetComments({
       postId: req.query.postId,
     });
+    //res.send(data);
     return res.status(0).json(data);
   } catch (e) {}
 });
@@ -76,17 +79,26 @@ router.post("/postComments", async (req, res) => {
   try {
     const commentId = generateToken();
     const description = req.body.description;
-    const userId = req.body.userId;
+    const userName = req.body.userName;
+    const postId = req.body.postId;
 
     const dbRes = await AddComments({
-      commnetId: commentId,
+      postId: postId,
+      commentId: commentId,
       description: description,
-      userId: userId,
+      userName: userName,
     });
     return true;
   } catch (e) {
     return false;
   }
 });
+
+// const a = CommentDBInst.AddComments({
+//   postId: "post1",
+//   commentId: "comment2",
+//   description: "Hungyyyyyyyy",
+//   userName: "Miru",
+// });
 
 module.exports = router;

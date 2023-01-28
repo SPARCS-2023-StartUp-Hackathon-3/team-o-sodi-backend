@@ -40,6 +40,16 @@ const OSchemaDefinition = {
     type: Number,
     default: 0,
   },
+
+  Closet: {
+    type: Array,
+    default: [],
+  },
+
+  Codi: {
+    type: Array,
+    default: [],
+  },
 };
 const OSchemaOptions = { timestamp: true };
 

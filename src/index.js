@@ -6,16 +6,15 @@ const fs = require("fs");
 require("dotenv").config();
 const http = require("http");
 
+const userRouter = require("./routes/User");
+const postsRouter = require("./routes/Posts");
+const storeRouter = require("./routes/Store");
+const commentsRouter = require("./routes/Comments");
+const purchaseRouter = require("./routes/Purchase");
+
 const app = express();
 const port = 8080;
 app.use(express.json());
-
-const loginRouter = require("./routes/Login");
-const postsRouter = require("./routes/Posts");
-//const storeRouter = require("./routes/Store");
-const commentsRouter = require("./routes/Comments");
-
-const router = express.Router();
 
 const whiteList = ["http://localhost:3000"];
 const corsOptions = {
@@ -30,9 +29,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use("/posts", postsRouter);
-//app.use("/store", storeRouter);
+app.use("/store", storeRouter);
 app.use("/comments", commentsRouter);
-app.use("/loginRouter", loginRouter);
+app.use("/loginRouter", userRouter);
+app.use("/purchase", purchaseRouter);
 
 const OMongooseOption = { useNewUrlParser: true, useUnifiedTopology: true };
 mongoose.connect("mongodb://localhost:27017/SODI", OMongooseOption).then(

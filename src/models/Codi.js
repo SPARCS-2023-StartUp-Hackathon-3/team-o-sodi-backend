@@ -1,28 +1,19 @@
 const mongoose = require("mongoose");
 
 const OSchemaDefinition = {
-  CommentId: {
-    type: String,
-    default: null,
-  },
-  Description: {
+  CodiId: {
     type: String,
     default: null,
   },
 
-  UserName: {
-    type: String,
-    default: null,
-  },
-
-  Comments: {
+  Clothes: {
     type: Array,
     default: [],
   },
 
-  Likes: {
-    type: Array,
-    default: [],
+  Images: {
+    type: String,
+    default: null,
   },
 };
 
@@ -30,6 +21,6 @@ const OSchemaOptions = { timestamp: true };
 
 const schema = new mongoose.Schema(OSchemaDefinition, OSchemaOptions);
 
-const CommentModel = mongoose.model("Comment", schema);
+const CodiModel = mongoose.model("Codi", schema);
 
-module.exports = CommentModel;
+module.exports = CodiModel;
