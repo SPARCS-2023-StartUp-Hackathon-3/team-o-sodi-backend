@@ -102,7 +102,7 @@ class RegDB {
       const images = store.Images;
       const prevClosetList = user.Closet;
       console.log("Added Closet for " + userName);
-      if (storeId !== null) {
+      if (storeId !== null && images !== null) {
         const dbRes = await UserModel.updateOne(
           { UserName: userName },
           {
