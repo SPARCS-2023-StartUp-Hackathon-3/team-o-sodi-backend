@@ -157,7 +157,7 @@ const RegDBInst = RegDB.getInst();
 router.post("/addCloset", async (req, res) => {
   try {
     const userName = req.body.userName;
-    const storeId = req.body.userName;
+    const storeId = req.body.storeId;
     const dbRed = AddCloset({ userName: userName, storeId: storeId });
     res.status(200).end();
   } catch (e) {
