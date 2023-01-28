@@ -89,7 +89,7 @@ function currentTime() {
 router.post("/addPurchase", async (req, res) => {
   try {
     const purchaseId = generateToken();
-    console.log(req.body);
+    console.log(req);
     const userName = req.body.userName;
     const storeId = req.body.storeId;
     const date = currentTime();
