@@ -24,7 +24,7 @@ class PurchaseDB {
       const price = store.Price;
       const product = store.Product;
       const brand = store.Brand;
-      const images = store.Imagees;
+      const images = store.Images;
       const newItem = new PurchaseModel({
         PurchaseId: purchaseId,
         UserName: userName,
