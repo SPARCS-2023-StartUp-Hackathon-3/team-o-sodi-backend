@@ -342,6 +342,7 @@ const sharpUpload = multer({ storage: sharpStorage }).single("file");
 
 router.post("/camera", sharpUpload, async (req, res) => {
   try {
+    console.log(userName + req.file.filename + "At post");
     const fileName = req.file.filename;
     let inputFile = "../../sharpFiles/" + fileName;
     let outputFile = "../../sharpFiles/trim_" + fileName;
