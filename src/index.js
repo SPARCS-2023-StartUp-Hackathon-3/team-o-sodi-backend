@@ -15,7 +15,7 @@ const purchaseRouter = require("./routes/Purchase");
 const app = express();
 const port = 8080;
 app.use(express.json());
-app.use(bodyparser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 const whiteList = [
