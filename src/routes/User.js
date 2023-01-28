@@ -7,6 +7,11 @@ const multer = require("multer");
 const { getEnabledCategories } = require("trace_events");
 const { generateKey } = require("crypto");
 const router = express.Router();
+const sharp = require("sharp");
+const axios = require("axios");
+const FormData = require("form-data");
+const fs = require("fs");
+const path = require("path");
 
 class RegDB {
   static _inst_;
@@ -295,6 +300,64 @@ router.post("/addCodi", uploadCodi, async (req, res) => {
     });
     res.status(200).end();
   } catch (e) {}
+});
+
+//File Upload
+const sharpStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "sharpFiles/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}_${file.originalname}`);
+  },
+});
+
+const sharpUpload = multer({ storage: storage }).single("file");
+//
+
+router.post("/camera", sharpUpload, async (req, res) => {
+  const fileName = req.file.filename;
+  let inputFile = "../../sharpFiles/" + fileName;
+  let outputFile = "../../sharpFiles/trim_" + fileName;
+
+  sharp(inputFile)
+    .resize({ height: 625, width: 400 })
+    .toFile(outputFile)
+    .then(function (newFileInfo) {
+      console.log("Sucess");
+    })
+    .catch(function (err) {
+      console.log("Error Occurred");
+    });
+
+  const inputPath = outputFile;
+  const formData = new FormData();
+  formData.append("size", "auto");
+  formData.append(
+    "image_file",
+    fs.createReadStream(inputPath),
+    path.basename(inputPath)
+  );
+
+  axios({
+    method: "post",
+    url: "https://api.remove.bg/v1.0/removebg",
+    data: formData,
+    responseType: "arraybuffer",
+    headers: {
+      ...formData.getHeaders(),
+      "X-Api-Key": "EPEvH2sGu63eRhznq9XwUYsC",
+    },
+    encoding: null,
+  })
+    .then((response) => {
+      if (response.status != 200)
+        return console.error("Error:", response.status, response.statusText);
+      fs.writeFileSync("no-bg_" + inputPath, response.data);
+    })
+    .catch((error) => {
+      return console.error("Request failed:", error);
+    });
 });
 
 //For Debug
