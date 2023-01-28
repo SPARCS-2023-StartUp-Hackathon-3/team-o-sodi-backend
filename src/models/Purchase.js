@@ -26,7 +26,7 @@ const OSchemaDefinition = {
     default: null,
   },
 
-  UserId: {
+  UserName: {
     type: String,
     default: null,
   },
