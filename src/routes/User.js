@@ -97,7 +97,7 @@ class RegDB {
       const user = await UserModel.findOne({ UserName: userName });
       const prevClosetList = user.Closet;
       console.log("Added Closet for " + userName);
-      if (storeId !== null || images !== null) {
+      if (storeId !== null) {
         const dbRes = await UserModel.updateOne(
           { UserName: userName },
           {
