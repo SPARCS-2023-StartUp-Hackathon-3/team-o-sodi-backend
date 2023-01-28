@@ -366,7 +366,6 @@ router.post("/camera", sharpUpload, async (req, res) => {
 router.post("/camera2", sharpUpload, async (req, res) => {
   console.log("GOGO");
   try {
-    console.log(userName);
     const fileName = req.file.filename;
     let inputFile = "../../sharpFiles/" + fileName;
     let outputFile = "../../sharpFiles/trim_" + fileName;
