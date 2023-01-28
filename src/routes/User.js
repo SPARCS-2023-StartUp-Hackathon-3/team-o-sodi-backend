@@ -98,6 +98,7 @@ class RegDB {
 
   PushCloset = async ({ userName, purchase, images }) => {
     try {
+      console.log(userName + images);
       const user = await UserModel.findOne({ UserName: userName });
       const prevClosetList = user.Closet;
       if (images !== null) {
