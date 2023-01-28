@@ -2,7 +2,6 @@ const express = require("express");
 const UserModel = require("../models/User");
 const StoreModel = require("../models/Store");
 const CodiModel = require("../models/Codi");
-const fs = require("fs");
 const multer = require("multer");
 const { getEnabledCategories } = require("trace_events");
 const { generateKey } = require("crypto");
