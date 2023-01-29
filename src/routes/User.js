@@ -356,6 +356,7 @@ router.post("/camera", sharpUpload, async (req, res) => {
       path.basename(inputPath)
     );
     console.log("Working on Camera BG...");
+    const newName = "postFiles/" + generateToken() + "-no-bg.png";
     axios({
       method: "post",
       url: "https://api.remove.bg/v1.0/removebg",
@@ -370,7 +371,6 @@ router.post("/camera", sharpUpload, async (req, res) => {
       .then((response) => {
         if (response.status != 200)
           return console.error("Error:", response.status, response.statusText);
-        const newName = "postFiles/" + generateToken() + "-no-bg.png";
         fs.writeFileSync(newName, response.data);
       })
       .catch((error) => {
@@ -383,7 +383,7 @@ router.post("/camera", sharpUpload, async (req, res) => {
       images: newName,
     });
     console.log("YAH");
-    return res.status(500).end();
+    return res.status(200).end();
   } catch (e) {
     console.log("wow: " + e);
     return res.status(500).end();
