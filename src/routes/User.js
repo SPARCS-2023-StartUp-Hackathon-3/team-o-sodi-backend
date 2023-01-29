@@ -350,7 +350,7 @@ router.post("/camera", sharpUpload, async (req, res) => {
 
     const formData = new FormData();
     formData.append("size", "auto");
-    formData.append("image_file", "./postFiles/" + fileName);
+    formData.append("image_file", "./postFiles/no-bg.png");
     console.log("Working on Camera BG...");
     const newName = "~/team-o-sodi-backend/postFiles/k-no-bg.png";
     axios({
