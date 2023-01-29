@@ -7,10 +7,10 @@ const { getEnabledCategories } = require("trace_events");
 const { generateKey } = require("crypto");
 const router = express.Router();
 //const sharp = require("sharp");
-//const axios = require("axios");
-//const FormData = require("form-data");
-//const fs = require("fs");
-//const path = require("path");
+const axios = require("axios");
+const FormData = require("form-data");
+const fs = require("fs");
+const path = require("path");
 
 class RegDB {
   static _inst_;
@@ -344,15 +344,44 @@ router.post("/camera", sharpUpload, async (req, res) => {
   console.log("GOGO");
   try {
     const fileName = req.file.filename;
-    let inputFile = "../../sharpFiles/" + fileName;
-    let outputFile = "../../sharpFiles/trim_" + fileName;
+    let inputPath = "@team-o-sodi-backend/postFiles/" + fileName;
     const images = fileName;
     const userName = req.body.userName;
+
+    const formData = new FormData();
+    formData.append("size", "auto");
+    formData.append(
+      "image_file",
+      fs.createReadStream(inputPath),
+      path.basename(inputPath)
+    );
+    console.log("Working on Camera BG...");
+    axios({
+      method: "post",
+      url: "https://api.remove.bg/v1.0/removebg",
+      data: formData,
+      responseType: "arraybuffer",
+      headers: {
+        ...formData.getHeaders(),
+        "X-Api-Key": "EPEvH2sGu63eRhznq9XwUYsC",
+      },
+      encoding: null,
+    })
+      .then((response) => {
+        if (response.status != 200)
+          return console.error("Error:", response.status, response.statusText);
+        const newName =
+          "@/team-o-sodi-backend/postFiles/" + generateToken() + "-no-bg.png";
+        fs.writeFileSync(newName, response.data);
+      })
+      .catch((error) => {
+        return console.error("Request failed:", error);
+      });
 
     const dbRes = RegDBInst.PushCloset({
       userName: userName,
       purchase: "false",
-      images: images,
+      images: newName,
     });
     console.log("YAH");
     return res.status(500).end();
