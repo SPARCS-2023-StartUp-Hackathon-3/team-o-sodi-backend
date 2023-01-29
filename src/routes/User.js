@@ -344,7 +344,7 @@ router.post("/camera", sharpUpload, async (req, res) => {
   console.log("GOGO");
   try {
     const fileName = req.file.filename;
-    let inputPath = "@/team-o-sodi-backend/postFiles/" + fileName;
+    let inputPath = "~/team-o-sodi-backend/postFiles/" + fileName;
     const images = fileName;
     const userName = req.body.userName;
 
@@ -371,7 +371,7 @@ router.post("/camera", sharpUpload, async (req, res) => {
         if (response.status != 200)
           return console.error("Error:", response.status, response.statusText);
         const newName =
-          "@/team-o-sodi-backend/postFiles/" + generateToken() + "-no-bg.png";
+          "~/team-o-sodi-backend/postFiles/" + generateToken() + "-no-bg.png";
         fs.writeFileSync(newName, response.data);
       })
       .catch((error) => {
