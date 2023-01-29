@@ -344,7 +344,7 @@ router.post("/camera", sharpUpload, async (req, res) => {
   console.log("GOGO");
   try {
     const fileName = req.file.filename;
-    let inputPath = "../../postFiles/" + fileName;
+    let inputPath = "~/team-o-sodi-backend/postFiles/" + fileName;
     const images = fileName;
     const userName = req.body.userName;
 
@@ -356,7 +356,8 @@ router.post("/camera", sharpUpload, async (req, res) => {
       path.basename(inputPath)
     );
     console.log("Working on Camera BG...");
-    const newName = "../../postFiles/" + generateToken() + "-no-bg.png";
+    const newName =
+      "~/team-o-sodi-backend/postFiles/" + generateToken() + "-no-bg.png";
     axios({
       method: "post",
       url: "https://api.remove.bg/v1.0/removebg",
