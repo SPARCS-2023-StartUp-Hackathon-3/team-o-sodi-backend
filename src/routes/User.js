@@ -348,7 +348,7 @@ router.post("/camera", sharpUpload, async (req, res) => {
     const images = fileName;
     const userName = req.body.userName;
 
-    const inputPath = "~/no-bg.png";
+    const inputPath = "./no-bg.png";
     const formData = new FormData();
     formData.append("size", "auto");
     formData.append(
