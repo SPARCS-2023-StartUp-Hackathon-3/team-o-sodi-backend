@@ -378,8 +378,6 @@ router.post("/camera", sharpUpload, async (req, res) => {
         console.log("[WOW A] " + response.status + "/" + response.statusText);
       })
       .catch((error) => {
-        console.log("[WOW B] " + response.status + "/" + response.statusText);
-
         return console.error("Request failed:", error);
       });
 
