@@ -344,7 +344,7 @@ router.post("/camera", sharpUpload, async (req, res) => {
   console.log("GOGO");
   try {
     const fileName = req.file.filename;
-    let inputPath = "@team-o-sodi-backend/postFiles/" + fileName;
+    let inputPath = "@/team-o-sodi-backend/postFiles/" + fileName;
     const images = fileName;
     const userName = req.body.userName;
 
