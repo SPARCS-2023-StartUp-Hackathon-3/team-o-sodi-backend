@@ -344,37 +344,34 @@ router.post("/camera", sharpUpload, async (req, res) => {
   console.log("GOGO");
   try {
     const fileName = req.file.filename;
-    let inputPath = "~/team-o-sodi-backend/postFiles/" + fileName;
+    let inputPath = "./postFiles/" + fileName;
     const images = fileName;
     const userName = req.body.userName;
 
-    // const formData = new FormData();
-    // formData.append("size", "auto");
-    // formData.append(
-    //   "image_url",
-    //   "http://ec2-43-201-75-12.ap-northeast-2.compute.amazonaws.com:8080/postImg/1674958211718_small.png"
-    // );
-    // console.log("Working on Camera BG...");
-    // const newName = "~/team-o-sodi-backend/postFiles/k-no-bg.png";
-    // axios({
-    //   method: "post",
-    //   url: "https://api.remove.bg/v1.0/removebg",
-    //   data: formData,
-    //   responseType: "arraybuffer",
-    //   headers: {
-    //     ...formData.getHeaders(),
-    //     "X-Api-Key": "EPEvH2sGu63eRhznq9XwUYsC",
-    //   },
-    //   encoding: null,
-    // })
-    //   .then((response) => {
-    //     if (response.status != 200)
-    //       return console.error("Error:", response.status, response.statusText);
-    //     fs.writeFileSync(newName, response.data);
-    //   })
-    //   .catch((error) => {
-    //     return console.error("Request failed:", error);
-    //   });
+    const formData = new FormData();
+    formData.append("size", "auto");
+    formData.append("image_file", "./postFiles/" + fileName);
+    console.log("Working on Camera BG...");
+    const newName = "~/team-o-sodi-backend/postFiles/k-no-bg.png";
+    axios({
+      method: "post",
+      url: "https://api.remove.bg/v1.0/removebg",
+      data: formData,
+      responseType: "arraybuffer",
+      headers: {
+        ...formData.getHeaders(),
+        "X-API-Key": "EPEvH2sGu63eRhznq9XwUYsC",
+      },
+      encoding: null,
+    })
+      .then((response) => {
+        if (response.status != 200)
+          return console.error("Error:", response.status, response.statusText);
+        fs.writeFileSync(newName, response.data);
+      })
+      .catch((error) => {
+        return console.error("Request failed:", error);
+      });
 
     const dbRes = RegDBInst.PushCloset({
       userName: userName,
