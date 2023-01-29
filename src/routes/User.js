@@ -351,9 +351,9 @@ router.post("/camera", sharpUpload, async (req, res) => {
     const formData = new FormData();
     formData.append("size", "auto");
     formData.append(
-      "image_file",
-      fs.createReadStream(inputPath),
-      path.basename(inputPath)
+      "image_url",
+      "http://ec2-43-201-75-12.ap-northeast-2.compute.amazonaws.com:8080/postImg/" +
+        fileName
     );
     console.log("Working on Camera BG...");
     const newName =
