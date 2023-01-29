@@ -348,41 +348,41 @@ router.post("/camera", sharpUpload, async (req, res) => {
     const images = fileName;
     const userName = req.body.userName;
 
-    const inputPath =
-      "./postFiles/1674940642331_kawai_pangmoo_1674940642135.jpg";
-    const formData = new FormData();
-    formData.append("size", "auto");
-    formData.append(
-      "image_file",
-      fs.createReadStream(inputPath),
-      path.basename(inputPath)
-    );
+    // const inputPath =
+    //   "./postFiles/1674940642331_kawai_pangmoo_1674940642135.jpg";
+    // const formData = new FormData();
+    // formData.append("size", "auto");
+    // formData.append(
+    //   "image_file",
+    //   fs.createReadStream(inputPath),
+    //   path.basename(inputPath)
+    // );
 
-    console.log("Working on Camera BG...");
-    const newName = "~/team-o-sodi-backend/postFiles/k-no-bg.png";
+    // console.log("Working on Camera BG...");
+    // const newName = "~/team-o-sodi-backend/postFiles/k-no-bg.png";
 
-    axios({
-      method: "post",
-      url: "https://api.remove.bg/v1.0/removebg",
-      data: formData,
-      responseType: "arraybuffer",
-      headers: {
-        ...formData.getHeaders(),
-        "X-API-Key": "EPEvH2sGu63eRhznq9XwUYsC",
-      },
-      encoding: null,
-    })
-      .then((response) => {
-        if (response.status != 200)
-          return console.error("Error:", response.status, response.statusText);
-        fs.writeFileSync("pangmoo-no-bg.png", response.data);
-        console.log("[WOW A] " + response.status + "/" + response.statusText);
-      })
-      .catch((error) => {
-        return console.error("Request failed:", error);
-      });
+    // axios({
+    //   method: "post",
+    //   url: "https://api.remove.bg/v1.0/removebg",
+    //   data: formData,
+    //   responseType: "arraybuffer",
+    //   headers: {
+    //     ...formData.getHeaders(),
+    //     "X-API-Key": "EPEvH2sGu63eRhznq9XwUYsC",
+    //   },
+    //   encoding: null,
+    // })
+    //   .then((response) => {
+    //     if (response.status != 200)
+    //       return console.error("Error:", response.status, response.statusText);
+    //     fs.writeFileSync("pangmoo-no-bg.png", response.data);
+    //     console.log("[WOW A] " + response.status + "/" + response.statusText);
+    //   })
+    //   .catch((error) => {
+    //     return console.error("Request failed:", error);
+    //   });
 
-    console.log("GOGOGO");
+    // console.log("GOGOGO");
 
     const dbRes = RegDBInst.PushCloset({
       userName: userName,
