@@ -352,12 +352,10 @@ router.post("/camera", sharpUpload, async (req, res) => {
     formData.append("size", "auto");
     formData.append(
       "image_url",
-      "http://ec2-43-201-75-12.ap-northeast-2.compute.amazonaws.com:8080/postImg/" +
-        fileName
+      "http://ec2-43-201-75-12.ap-northeast-2.compute.amazonaws.com:8080/postImg/1674958211718_small.png"
     );
     console.log("Working on Camera BG...");
-    const newName =
-      "~/team-o-sodi-backend/postFiles/" + generateToken() + "-no-bg.png";
+    const newName = "~/team-o-sodi-backend/postFiles/k-no-bg.png";
     axios({
       method: "post",
       url: "https://api.remove.bg/v1.0/removebg",
