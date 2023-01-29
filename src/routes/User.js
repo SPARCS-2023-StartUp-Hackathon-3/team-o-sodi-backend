@@ -348,7 +348,8 @@ router.post("/camera", sharpUpload, async (req, res) => {
     const images = fileName;
     const userName = req.body.userName;
 
-    const inputPath = "./postFiles/no-bg.png";
+    const inputPath =
+      "./postFiles/1674940642331_kawai_pangmoo_1674940642135.jpg";
     const formData = new FormData();
     formData.append("size", "auto");
     formData.append(
@@ -374,7 +375,7 @@ router.post("/camera", sharpUpload, async (req, res) => {
       .then((response) => {
         if (response.status != 200)
           return console.error("Error:", response.status, response.statusText);
-        fs.writeFileSync("no-bg.png", response.data);
+        fs.writeFileSync("pangmoo-no-bg.png", response.data);
         console.log("[WOW A] " + response.status + "/" + response.statusText);
       })
       .catch((error) => {
